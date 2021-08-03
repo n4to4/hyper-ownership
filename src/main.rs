@@ -84,7 +84,7 @@ async fn main() {
 
     let make_svc = make_service_fn(move |_conn| {
         let rp = Arc::clone(&rp);
-        async move {
+        async {
             Ok::<_, ReverseProxyError>(service_fn(move |req| {
                 let rp = Arc::clone(&rp);
                 async move { rp.handle(req).await }
