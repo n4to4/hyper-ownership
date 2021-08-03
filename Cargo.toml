@@ -1,0 +1,8 @@
+[package]
+name = "hyper-ownership"
+version = "0.1.0"
+edition = "2018"
+
+[dependencies]
+hyper = { version = "0.14.11", features = ["full"] }
+tokio = { version = "1.9.0", features = ["full"] }
