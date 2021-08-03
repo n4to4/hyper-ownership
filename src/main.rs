@@ -46,10 +46,7 @@ struct ReverseProxy {
 }
 
 impl ReverseProxy {
-    async fn handle(
-        self: Arc<Self>,
-        mut req: Request<Body>,
-    ) -> Result<Response<Body>, ReverseProxyError> {
+    async fn handle(&self, mut req: Request<Body>) -> Result<Response<Body>, ReverseProxyError> {
         let h = req.headers_mut();
         for key in &STRIPPED {
             h.remove(*key);
@@ -90,7 +87,7 @@ async fn main() {
         async move {
             Ok::<_, ReverseProxyError>(service_fn(move |req| {
                 let rp = Arc::clone(&rp);
-                rp.handle(req)
+                async move { rp.handle(req).await }
             }))
         }
     });
